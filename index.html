@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Much Nothing?</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --paper:#f8f5ed;
+    --ink:#171a32;
+    --yellow:#f4d84e;
+    --pink:#f4b9c8;
+    --blue:#c6e3f2;
+    --green:#cce8d2;
+    --purple:#ded2f2;
+    --peach:#f4d2c0;
+    --white:#fffdf8;
+}
+
+body{
+    background:#e8e4db;
+    color:var(--ink);
+    font-family:
+        "Trebuchet MS",
+        "Arial Rounded MT Bold",
+        Arial,
+        sans-serif;
+}
+
+button{
+    font-family:inherit;
+}
+
+.app{
+    min-height:100vh;
+    padding:18px;
+}
+
+.site-window{
+    min-height:calc(100vh - 36px);
+    background:var(--paper);
+    border:2px solid #d5d0c4;
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+}
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+    height:58px;
+    border-bottom:1px solid #ddd8cc;
+    display:flex;
+    align-items:center;
+    padding:0 22px;
+}
+
+.browser-dots{
+    display:flex;
+    gap:7px;
+}
+
+.browser-dot{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+}
+
+.red{background:#ef9a9a;}
+.orange{background:#e9c55d;}
+.green{background:#79bda9;}
+
+.logo{
+    margin-left:20px;
+    font-size:15px;
+    font-weight:900;
+}
+
+.top-right{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.badge{
+    border:1.5px solid #9eb6c1;
+    border-radius:25px;
+    padding:6px 13px;
+    font-size:11px;
+    font-weight:900;
+}
+
+.sound-btn{
+    border:0;
+    background:transparent;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* ================= SCREENS ================= */
+
+.screen{
+    display:none;
+    min-height:calc(100vh - 94px);
+}
+
+.screen.active{
+    display:block;
+}
+
+.close-btn{
+    position:absolute;
+    right:20px;
+    top:68px;
+    z-index:100;
+    border:0;
+    background:transparent;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* ================= COMMON ================= */
+
+.yellow-label{
+    display:inline-block;
+    background:var(--yellow);
+    padding:9px 18px;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1px;
+    transform:rotate(-2deg);
+}
+
+.dark-btn{
+    border:2px solid var(--ink);
+    background:var(--ink);
+    color:white;
+    border-radius:30px;
+    padding:15px 28px;
+    font-size:13px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.dark-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* ================= 1 LANDING ================= */
+
+.landing{
+    min-height:calc(100vh - 94px);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    padding:45px 8%;
+}
+
+.landing-left{
+    position:relative;
+}
+
+.landing h1{
+    font-size:72px;
+    line-height:.91;
+    letter-spacing:-4px;
+    margin:22px 0;
+}
+
+.landing-description{
+    max-width:520px;
+    color:#5e5f6b;
+    font-size:16px;
+    line-height:1.55;
+}
+
+.landing .dark-btn{
+    margin-top:27px;
+}
+
+.productive-note{
+    position:absolute;
+    left:-30px;
+    bottom:-115px;
+    font-size:13px;
+    font-weight:900;
+    transform:rotate(-7deg);
+}
+
+.productive-arrow{
+    font-size:28px;
+    margin-left:45px;
+}
+
+.landing-art{
+    height:500px;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+/* ================= CAT ================= */
+
+.big-cat{
+    width:310px;
+    height:190px;
+    background:#151525;
+    border-radius:55% 55% 45% 45%;
+    position:relative;
+}
+
+.big-cat:before,
+.big-cat:after{
+    content:"";
+    position:absolute;
+    top:-48px;
+    width:75px;
+    height:75px;
+    background:#151525;
+}
+
+.big-cat:before{
+    left:42px;
+    transform:rotate(27deg);
+    border-radius:15px 8px 8px 8px;
+}
+
+.big-cat:after{
+    right:42px;
+    transform:rotate(63deg);
+    border-radius:8px 15px 8px 8px;
+}
+
+.cat-face{
+    position:absolute;
+    width:150px;
+    height:120px;
+    background:#fffaf3;
+    border-radius:50%;
+    left:80px;
+    top:45px;
+}
+
+.cat-eye{
+    position:absolute;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#161625;
+    top:45px;
+}
+
+.cat-eye.left{left:48px;}
+.cat-eye.right{right:48px;}
+
+.cat-nose{
+    position:absolute;
+    left:68px;
+    top:62px;
+    width:14px;
+    height:10px;
+    background:#eaa9b8;
+    border-radius:50%;
+}
+
+.cat-mouth{
+    position:absolute;
+    left:68px;
+    top:75px;
+    width:14px;
+    height:7px;
+    border-bottom:2px solid #171a32;
+    border-radius:50%;
+}
+
+.big-cat.talking .cat-mouth{
+    height:15px;
+    background:#171a32;
+    border:0;
+    animation:mouth .15s infinite alternate;
+}
+
+@keyframes mouth{
+    from{transform:scaleY(.35);}
+    to{transform:scaleY(1);}
+}
+
+.sticky-note{
+    position:absolute;
+    right:20px;
+    top:50px;
+    background:#ffe889;
+    padding:18px;
+    width:125px;
+    font-size:13px;
+    line-height:1.45;
+    font-weight:900;
+    transform:rotate(4deg);
+}
+
+.cup{
+    position:absolute;
+    right:35px;
+    bottom:20px;
+    width:62px;
+    height:75px;
+    border:3px solid var(--ink);
+    border-radius:8px 8px 15px 15px;
+    background:#c9d9f1;
+}
+
+/* ================= 2 ACTIVITY ================= */
+
+.activity{
+    padding:35px 6%;
+}
+
+.activity-header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.activity-header h1{
+    font-size:49px;
+    line-height:.95;
+    margin-top:17px;
+}
+
+.activity-header p{
+    margin-top:8px;
+    color:#696975;
+    font-size:13px;
+}
+
+.activity-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    max-width:1050px;
+    margin:auto;
+}
+
+.activity-card{
+    min-height:145px;
+    border:2px solid var(--ink);
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:12px;
+    cursor:pointer;
+    transition:.18s;
+}
+
+.activity-card:hover{
+    transform:translateY(-4px);
+}
+
+.activity-card.selected{
+    box-shadow:0 0 0 4px var(--ink);
+}
+
+.card1{background:#ead5f5;}
+.card2{background:#fff0a9;}
+.card3{background:#f5cbd3;}
+.card4{background:#cce9d0;}
+.card5{background:#c9e4f3;}
+.card6{background:#f5d4c1;}
+.card7{background:#e4d6f1;}
+.card8{background:#f2d1e0;}
+
+.card-icon{
+    font-size:36px;
+    margin-bottom:7px;
+}
+
+.card-title{
+    font-size:14px;
+    font-weight:900;
+}
+
+.card-description{
+    margin-top:5px;
+    color:#555663;
+    font-size:10px;
+    line-height:1.3;
+}
+
+.activity-footer{
+    max-width:1050px;
+    margin:20px auto 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.activity-note{
+    font-size:12px;
+    font-weight:900;
+}
+
+.start-timer-btn{
+    border:0;
+    background:var(--ink);
+    color:white;
+    border-radius:30px;
+    padding:14px 28px;
+    font-size:12px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.start-timer-btn:disabled{
+    background:#c9c7c0;
+    cursor:not-allowed;
+}
+
+/* ================= 3 TIMER ================= */
+
+.timer-screen{
+    background:
+        radial-gradient(circle at 80% 20%,#29395a 0 7%,transparent 8%),
+        linear-gradient(145deg,#090b18,#17162b 45%,#24203d);
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.timer-content{
+    min-height:calc(100vh - 94px);
+    position:relative;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.timer-choice{
+    background:#fff5cc;
+    color:var(--ink);
+    padding:18px 32px;
+    transform:rotate(-2deg);
+    box-shadow:5px 6px 0 #0005;
+    font-size:11px;
+    font-weight:900;
+}
+
+.timer-choice strong{
+    display:block;
+    font-size:28px;
+    margin:5px 0;
+}
+
+.timer-display{
+    font-size:70px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-top:43px;
+}
+
+.timer-subtitle{
+    color:#d5d5df;
+    margin-top:5px;
+    font-size:13px;
+}
+
+.timer-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:27px;
+}
+
+.timer-btn{
+    border:2px solid white;
+    background:transparent;
+    color:white;
+    padding:12px 28px;
+    border-radius:30px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.timer-done{
+    background:#f4b8c6;
+    border-color:#f4b8c6;
+    color:var(--ink);
+}
+
+/* ================= 4 RESULT ================= */
+
+.result-screen{
+    text-align:center;
+    position:relative;
+    padding:55px 20px;
+}
+
+.result-screen h1{
+    font-size:57px;
+    margin:17px 0 25px;
+}
+
+.result-cat{
+    position:absolute;
+    right:13%;
+    top:45px;
+    font-size:70px;
+}
+
+.result-card{
+    max-width:680px;
+    margin:auto;
+    padding:28px;
+    background:var(--white);
+    border:2px solid var(--ink);
+    border-radius:16px;
+    box-shadow:6px 6px 0 #0001;
+}
+
+.result-time{
+    font-size:48px;
+    font-weight:900;
+    margin:10px 0;
+}
+
+.result-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    margin-top:22px;
+    padding:20px 0;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+}
+
+.stat strong{
+    display:block;
+    font-size:25px;
+}
+
+.stat span{
+    font-size:9px;
+    color:#777;
+    font-weight:900;
+}
+
+.result-award{
+    display:inline-block;
+    margin-top:22px;
+    background:var(--yellow);
+    padding:8px 15px;
+    font-size:11px;
+    font-weight:900;
+}
+
+.result-quote{
+    margin-top:18px;
+    font-size:12px;
+    font-weight:900;
+}
+
+/* ================= 5 MOVIE ================= */
+
+.movie-screen{
+    background:#090c18;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+/* IMPORTANT:
+   This is room window.
+   It is NOT .site-window.
+*/
+
+.movie-scene{
+    min-height:calc(100vh - 94px);
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            180deg,
+            #11182d 0%,
+            #16162a 55%,
+            #25203b 100%
+        );
+}
+
+/* ROOM WINDOW */
+
+.room-window{
+    position:absolute;
+    right:10%;
+    top:12%;
+    width:230px;
+    height:170px;
+    background:#172b48;
+    border:8px solid #101225;
+    z-index:1;
+}
+
+.room-window:before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    bottom:0;
+    width:5px;
+    background:#101225;
+}
+
+.room-window:after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    right:0;
+    height:5px;
+    background:#101225;
+}
+
+.moon{
+    position:absolute;
+    right:14%;
+    top:16%;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#eeecca;
+    z-index:2;
+}
+
+.bed{
+    position:absolute;
+    left:7%;
+    right:7%;
+    bottom:8%;
+    height:180px;
+    background:#272540;
+    border-radius:100px 100px 20px 20px;
+}
+
+.person{
+    position:absolute;
+    left:40%;
+    bottom:17%;
+    font-size:100px;
+    z-index:3;
+}
+
+.movie-note{
+    position:absolute;
+    right:7%;
+    top:30%;
+    background:#fff5cf;
+    color:var(--ink);
+    padding:18px;
+    font-size:13px;
+    line-height:1.4;
+    font-weight:900;
+    transform:rotate(4deg);
+    z-index:4;
+}
+
+.dialogue-box{
+    position:absolute;
+    z-index:10;
+    left:5%;
+    right:5%;
+    bottom:25px;
+    min-height:105px;
+    background:#060912ee;
+    border:1px solid #454a5c;
+    border-radius:12px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.dialogue-cat{
+    font-size:52px;
+}
+
+.dialogue{
+    flex:1;
+    font-size:13px;
+    line-height:1.65;
+}
+
+.dialogue b{
+    color:var(--yellow);
+}
+
+.skip-btn{
+    background:transparent;
+    color:white;
+    border:0;
+    cursor:pointer;
+    font-weight:900;
+}
+
+/* ================= 6 EXTRA ================= */
+
+.extra-screen{
+    padding:40px 7%;
+}
+
+.extra-grid{
+    min-height:calc(100vh - 160px);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.fun-area{
+    min-height:430px;
+    border:2px dashed #bdb8aa;
+    border-radius:17px;
+    position:relative;
+    overflow:hidden;
+    background:#faf7ee;
+}
+
+.popup{
+    position:absolute;
+    background:var(--white);
+    border:2px solid var(--ink);
+    border-radius:12px;
+    padding:15px;
+    box-shadow:5px 5px 0 #0002;
+}
+
+.popup h3{
+    font-size:14px;
+}
+
+.popup p{
+    margin-top:7px;
+    color:#666;
+    font-size:10px;
+}
+
+.popup1{
+    left:8%;
+    top:12%;
+}
+
+.popup2{
+    right:8%;
+    top:32%;
+    transform:rotate(3deg);
+}
+
+.popup3{
+    left:22%;
+    bottom:12%;
+    transform:rotate(-2deg);
+}
+
+.loading-bar{
+    width:180px;
+    height:12px;
+    border:2px solid var(--ink);
+    border-radius:20px;
+    margin-top:10px;
+    overflow:hidden;
+}
+
+.loading-bar span{
+    display:block;
+    height:100%;
+    width:0;
+    background:var(--yellow);
+    animation:loading 3s infinite;
+}
+
+@keyframes loading{
+    0%{width:0;}
+    80%{width:100%;}
+    100%{width:100%;}
+}
+
+.extra-content h2{
+    font-size:50px;
+    line-height:1;
+    margin:18px 0;
+}
+
+.extra-content p{
+    max-width:420px;
+    color:#666;
+    line-height:1.5;
+    font-size:14px;
+}
+
+/* ================= SPEECH ================= */
+
+.speech-bubble{
+    position:fixed;
+    z-index:999;
+    left:20px;
+    bottom:20px;
+    max-width:320px;
+    background:var(--white);
+    color:var(--ink);
+    border:2px solid var(--ink);
+    border-radius:15px;
+    padding:13px 17px;
+    font-size:12px;
+    font-weight:900;
+    box-shadow:4px 5px 0 #0002;
+    display:none;
+}
+
+.speech-bubble.show{
+    display:block;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .landing{
+        grid-template-columns:1fr;
+        text-align:center;
+        padding:40px 7%;
+    }
+
+    .landing-description{
+        margin:auto;
+    }
+
+    .productive-note{
+        display:none;
+    }
+
+    .landing-art{
+        height:350px;
+    }
+
+    .activity-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .extra-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .app{
+        padding:7px;
+    }
+
+    .site-window{
+        min-height:calc(100vh - 14px);
+    }
+
+    .topbar{
+        padding:0 12px;
+    }
+
+    .logo{
+        font-size:12px;
+    }
+
+    .badge{
+        display:none;
+    }
+
+    .landing h1{
+        font-size:53px;
+        letter-spacing:-2px;
+    }
+
+    .big-cat{
+        transform:scale(.75);
+    }
+
+    .activity{
+        padding:30px 12px;
+    }
+
+    .activity-header h1{
+        font-size:40px;
+    }
+
+    .activity-grid{
+        gap:9px;
+    }
+
+    .activity-card{
+        min-height:125px;
+    }
+
+    .card-icon{
+        font-size:28px;
+    }
+
+    .card-title{
+        font-size:11px;
+    }
+
+    .card-description{
+        font-size:8px;
+    }
+
+    .activity-footer{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .start-timer-btn{
+        width:100%;
+    }
+
+    .timer-display{
+        font-size:42px;
+    }
+
+    .timer-buttons{
+        flex-direction:column;
+        width:80%;
+    }
+
+    .timer-btn{
+        width:100%;
+    }
+
+    .result-screen h1{
+        font-size:43px;
+    }
+
+    .result-cat{
+        display:none;
+    }
+
+    .result-time{
+        font-size:37px;
+    }
+
+    .result-stats{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .person{
+        left:28%;
+        font-size:75px;
+    }
+
+    .room-window{
+        right:5%;
+        width:170px;
+        height:130px;
+    }
+
+    .movie-note{
+        right:4%;
+        top:27%;
+        font-size:10px;
+    }
+
+    .dialogue-box{
+        left:3%;
+        right:3%;
+    }
+
+    .dialogue{
+        font-size:10px;
+    }
+
+    .dialogue-cat{
+        font-size:35px;
+    }
+
+    .extra-content h2{
+        font-size:38px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="site-window">
+
+<!-- ================= TOP BAR ================= -->
+
+<header class="topbar">
+
+    <div class="browser-dots">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot orange"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <div class="logo">
+        HOW MUCH NOTHING?
+    </div>
+
+    <div class="top-right">
+
+        <div class="badge">
+            100% unnecessary
+        </div>
+
+        <button
+            id="soundButton"
+            class="sound-btn"
+            onclick="toggleSound()"
+        >
+            🔊
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= 1 LANDING ================= -->
+
+<section id="landing" class="screen active">
+
+<div class="landing">
+
+    <div class="landing-left">
+
+        <div class="yellow-label">
+            THE WORLD'S LEAST USEFUL
+            PRODUCTIVITY TOOL
+        </div>
+
+        <h1>
+            How Much<br>
+            Nothing?
+        </h1>
+
+        <p class="landing-description">
+            Let's calculate how much of your precious time
+            is being spent doing absolutely nothing.
+        </p>
+
+        <button
+            class="dark-btn"
+            onclick="openActivity()"
+        >
+            START DOING NOTHING →
+        </button>
+
+        <div class="productive-note">
+            Productive<br>
+            people scare me
+            <div class="productive-arrow">↓</div>
+        </div>
+
+    </div>
+
+
+    <div class="landing-art">
+
+        <div id="landingCat" class="big-cat">
+
+            <div class="cat-face">
+
+                <div class="cat-eye left"></div>
+                <div class="cat-eye right"></div>
+
+                <div class="cat-nose"></div>
+                <div class="cat-mouth"></div>
+
+            </div>
+
+        </div>
+
+        <div class="sticky-note">
+            good things<br>
+            take time...<br><br>
+            ...to do<br>
+            nothing. ♡
+        </div>
+
+        <div class="cup"></div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= 2 ACTIVITY ================= -->
+
+<section id="activity" class="screen">
+
+<button
+    class="close-btn"
+    onclick="goHome()"
+>
+    ×
+</button>
+
+<div class="activity">
+
+    <div class="activity-header">
+
+        <div class="yellow-label">
+            STEP 01 / 03
+        </div>
+
+        <h1>
+            What are you doing?
+        </h1>
+
+        <p>
+            Be honest. Nobody is judging you.
+        </p>
+
+    </div>
+
+
+    <div class="activity-grid">
+
+        <div
+            class="activity-card card1"
+            onclick="selectActivity(this,'Sitting','Chair: 1. You: 0.')"
+        >
+            <div class="card-icon">🪑</div>
+            <div class="card-title">Sitting</div>
+            <div class="card-description">
+                Chair: 1.<br>You: 0.
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card2"
+            onclick="selectActivity(this,'Standing','Vertical. Still useless.')"
+        >
+            <div class="card-icon">🧍</div>
+            <div class="card-title">Standing</div>
+            <div class="card-description">
+                Vertical.<br>Still useless.
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card3"
+            onclick="selectActivity(this,'Scrolling','Just one more.')"
+        >
+            <div class="card-icon">📱</div>
+            <div class="card-title">Scrolling</div>
+            <div class="card-description">
+                Just one more.
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card4"
+            onclick="selectActivity(this,'Looking at Nothing','Brain.exe has stopped working.')"
+        >
+            <div class="card-icon">👀</div>
+            <div class="card-title">Looking at Nothing</div>
+            <div class="card-description">
+                Brain.exe has<br>
+                stopped working.
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card5"
+            onclick="selectActivity(this,'Lying Down','Gravity has entered the chat.')"
+        >
+            <div class="card-icon">🛏️</div>
+            <div class="card-title">Lying Down</div>
+            <div class="card-description">
+                Gravity has entered<br>
+                the chat.
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card6"
+            onclick="selectActivity(this,'Staring at a Door','Waiting for... something?')"
+        >
+            <div class="card-icon">🚪</div>
+            <div class="card-title">Staring at a Door</div>
+            <div class="card-description">
+                Waiting for...<br>
+                something?
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card7"
+            onclick="selectActivity(this,'Just Existing','System running. No tasks found.')"
+        >
+            <div class="card-icon">😺</div>
+            <div class="card-title">Just Existing</div>
+            <div class="card-description">
+                System running.<br>
+                No tasks found.
+            </div>
+        </div>
+
+
+        <div
+            class="activity-card card8"
+            onclick="selectActivity(this,'Doing Nothing','Finally. Your specialty.')"
+        >
+            <div class="card-icon">😼</div>
+            <div class="card-title">Doing Nothing</div>
+            <div class="card-description">
+                Finally. Your<br>
+                specialty.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="activity-footer">
+
+        <div class="activity-note">
+            ↳ Pick one and let's waste some time...
+        </div>
+
+        <button
+            id="startTimerButton"
+            class="start-timer-btn"
+            disabled
+            onclick="startTimer()"
+        >
+            START TIMER →
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= 3 TIMER ================= -->
+
+<section id="timer" class="screen timer-screen">
+
+<button
+    class="close-btn"
+    style="color:white"
+    onclick="leaveTimer()"
+>
+    ×
+</button>
+
+<div class="timer-content">
+
+    <div class="timer-choice">
+
+        YOU CHOSE:
+
+        <strong id="timerActivity">
+            NOTHING
+        </strong>
+
+        <span id="timerJoke">
+            "Just one more."
+        </span>
+
+    </div>
+
+    <div id="timerDisplay" class="timer-display">
+        00:00:00
+    </div>
+
+    <div class="timer-subtitle">
+        one more... (again)
+    </div>
+
+    <div class="timer-buttons">
+
+        <button
+            id="pauseButton"
+            class="timer-btn"
+            onclick="pauseResume()"
+        >
+            ⏸ PAUSE
+        </button>
+
+        <button
+            class="timer-btn timer-done"
+            onclick="finishTimer()"
+        >
+            I'M DONE
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= 4 RESULT ================= -->
+
+<section id="result" class="screen">
+
+<div class="result-screen">
+
+    <div class="yellow-label">
+        WAIT...
+    </div>
+
+    <div class="result-cat">
+        🐈‍⬛
+    </div>
+
+    <h1>
+        Congratulations.
+    </h1>
+
+    <div class="result-card">
+
+        <p>You spent</p>
+
+        <div
+            id="resultTime"
+            class="result-time"
+        >
+            0 seconds
+        </div>
+
+        <p>
+            doing absolutely nothing.
+        </p>
+
+        <div class="result-stats">
+
+            <div class="stat">
+                <strong>0</strong>
+                <span>CALORIES BURNED</span>
+            </div>
+
+            <div class="stat">
+                <strong>0</strong>
+                <span>USEFUL THOUGHTS</span>
+            </div>
+
+            <div class="stat">
+                <strong>100%</strong>
+                <span>NOTHING SCORE</span>
+            </div>
+
+        </div>
+
+        <div class="result-award">
+            🏆 PROFESSIONAL NOTHING DOER
+        </div>
+
+        <div
+            id="resultQuote"
+            class="result-quote"
+        >
+            "Bro really said ONE MORE SCROLL." 💀
+        </div>
+
+        <button
+            class="dark-btn"
+            style="margin-top:20px"
+            onclick="openMovie()"
+        >
+            SEE WHAT JUST HAPPENED →
+        </button>
+
+    </div>
+
+
+    <button
+        class="dark-btn"
+        style="
+            margin-top:20px;
+            background:white;
+            color:var(--ink);
+        "
+        onclick="restart()"
+    >
+        ↻ DO IT AGAIN
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- ================= 5 MOVIE ================= -->
+
+<section id="movie" class="screen movie-screen">
+
+<button
+    class="close-btn"
+    style="color:white"
+    onclick="openExtra()"
+>
+    ×
+</button>
+
+<div class="movie-scene">
+
+    <div class="room-window"></div>
+
+    <div class="moon"></div>
+
+    <div class="bed"></div>
+
+    <div class="person">
+        🧑‍🦰📱
+    </div>
+
+    <div class="movie-note">
+        SCROLL<br>
+        SCROLL<br>
+        SCROLL<br>
+        REPEAT
+    </div>
+
+    <div class="dialogue-box">
+
+        <div class="dialogue-cat">
+            🐈‍⬛
+        </div>
+
+        <div class="dialogue">
+
+            <b>Friend:</b>
+            “Inniyum scroll cheyyano?”
+
+            <br>
+
+            <b>You:</b>
+            “Just one more...”
+
+            <br>
+
+            <b>Friend:</b>
+            “Athinu vendi life illa.”
+
+        </div>
+
+        <button
+            class="skip-btn"
+            onclick="openExtra()"
+        >
+            SKIP →
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= 6 EXTRA ================= -->
+
+<section id="extra" class="screen">
+
+<div class="extra-screen">
+
+<div class="extra-grid">
+
+    <div
+        id="funArea"
+        class="fun-area"
+    >
+
+        <div class="popup popup1">
+
+            <h3>
+                🐈 ARE YOU SURE?
+            </h3>
+
+            <p>
+                You're doing nothing...<br>
+                Are you really okay with that?
+            </p>
+
+            <button
+                class="dark-btn"
+                style="
+                    padding:7px 14px;
+                    font-size:9px;
+                    margin-top:10px;
+                "
+                onclick="randomMessage()"
+            >
+                YES
+            </button>
+
+        </div>
+
+
+        <div class="popup popup2">
+
+            <h3>
+                Productivity
+            </h3>
+
+            <p>
+                has left the chat.
+            </p>
+
+        </div>
+
+
+        <div class="popup popup3">
+
+            <h3>
+                Loading productivity...
+            </h3>
+
+            <div class="loading-bar">
+                <span></span>
+            </div>
+
+            <p>0%</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="extra-content">
+
+        <div class="yellow-label">
+            EXTRA FUN ELEMENTS
+        </div>
+
+        <h2>
+            Absolutely nothing<br>
+            is a lifestyle.
+        </h2>
+
+        <p id="randomText">
+            Productivity has officially
+            left the chat.
+        </p>
+
+        <button
+            class="dark-btn"
+            style="margin-top:20px"
+            onclick="randomMessage()"
+        >
+            SHOW RANDOM NONSENSE →
+        </button>
+
+        <br><br>
+
+        <button
+            class="dark-btn"
+            style="
+                background:white;
+                color:var(--ink);
+            "
+            onclick="restart()"
+        >
+            ← START OVER
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SPEECH ================= -->
+
+<div
+    id="speechBubble"
+    class="speech-bubble"
+></div>
+
+
+</div>
+</div>
+
+
+<script>
+
+/* ================= VARIABLES ================= */
+
+let selectedActivity = "";
+let selectedJoke = "";
+
+let seconds = 0;
+let timerInterval = null;
+let isPaused = false;
+let soundEnabled = true;
+
+
+/* ================= SCREEN ================= */
+
+function showScreen(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen =>
+            screen.classList.remove("active")
+        );
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+}
+
+
+/* ================= LANDING ================= */
+
+function openActivity(){
+
+    showScreen("activity");
+
+    speak(
+        "Okay. What are you doing?"
+    );
+}
+
+
+/* ================= HOME ================= */
+
+function goHome(){
+
+    clearInterval(timerInterval);
+
+    showScreen("landing");
+}
+
+
+/* ================= SELECT ================= */
+
+function selectActivity(card,activity,joke){
+
+    selectedActivity = activity;
+    selectedJoke = joke;
+
+    document
+        .querySelectorAll(".activity-card")
+        .forEach(item =>
+            item.classList.remove("selected")
+        );
+
+    card.classList.add("selected");
+
+    document
+        .getElementById("startTimerButton")
+        .disabled = false;
+
+    speak(
+        activity + ". " + joke
+    );
+}
+
+
+/* ================= TIMER START ================= */
+
+function startTimer(){
+
+    if(!selectedActivity) return;
+
+    seconds = 0;
+    isPaused = false;
+
+    document
+        .getElementById("timerActivity")
+        .textContent =
+        selectedActivity.toUpperCase();
+
+    document
+        .getElementById("timerJoke")
+        .textContent =
+        '"' + selectedJoke + '"';
+
+    document
+        .getElementById("pauseButton")
+        .textContent =
+        "⏸ PAUSE";
+
+    showScreen("timer");
+
+    updateTimer();
+
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+
+        if(!isPaused){
+
+            seconds++;
+
+            updateTimer();
+        }
+
+    },1000);
+
+    speak(
+        "Timer started. Congratulations. You are officially doing nothing."
+    );
+}
+
+
+/* ================= UPDATE TIMER ================= */
+
+function updateTimer(){
+
+    const hours =
+        Math.floor(seconds / 3600);
+
+    const minutes =
+        Math.floor((seconds % 3600) / 60);
+
+    const secs =
+        seconds % 60;
+
+    const display =
+        String(hours).padStart(2,"0")
+        + ":"
+        + String(minutes).padStart(2,"0")
+        + ":"
+        + String(secs).padStart(2,"0");
+
+    document
+        .getElementById("timerDisplay")
+        .textContent =
+        display;
+}
+
+
+/* ================= PAUSE ================= */
+
+function pauseResume(){
+
+    isPaused = !isPaused;
+
+    const button =
+        document.getElementById("pauseButton");
+
+    if(isPaused){
+
+        button.textContent =
+            "▶ RESUME";
+
+        speak(
+            "Timer paused. You are temporarily doing nothing about doing nothing."
+        );
+
+    }else{
+
+        button.textContent =
+            "⏸ PAUSE";
+
+        speak(
+            "Welcome back. Nothing continues."
+        );
+    }
+}
+
+
+/* ================= FINISH ================= */
+
+function finishTimer(){
+
+    clearInterval(timerInterval);
+
+    document
+        .getElementById("resultTime")
+        .textContent =
+        humanTime(seconds);
+
+    const quote =
+        document.getElementById("resultQuote");
+
+    if(selectedActivity === "Scrolling"){
+
+        quote.textContent =
+            '"Bro really said ONE MORE SCROLL." 💀';
+
+    }else if(selectedActivity === "Doing Nothing"){
+
+        quote.textContent =
+            '"Finally. Your specialty." 😼';
+
+    }else{
+
+        quote.textContent =
+            '"You really committed to '
+            + selectedActivity.toLowerCase()
+            + '." 🐈';
+    }
+
+    showScreen("result");
+
+    speak(
+        "And you're done. You spent "
+        + humanTime(seconds)
+        + " doing absolutely nothing. Congratulations."
+    );
+}
+
+
+/* ================= HUMAN TIME ================= */
+
+function humanTime(totalSeconds){
+
+    if(totalSeconds < 60){
+
+        return totalSeconds
+            + " second"
+            + (totalSeconds === 1 ? "" : "s");
+    }
+
+    const minutes =
+        Math.floor(totalSeconds / 60);
+
+    const remaining =
+        totalSeconds % 60;
+
+    if(remaining === 0){
+
+        return minutes
+            + " minute"
+            + (minutes === 1 ? "" : "s");
+    }
+
+    return minutes
+        + " minute"
+        + (minutes === 1 ? "" : "s")
+        + " and "
+        + remaining
+        + " second"
+        + (remaining === 1 ? "" : "s");
+}
+
+
+/* ================= MOVIE ================= */
+
+function openMovie(){
+
+    showScreen("movie");
+
+    speak(
+        "Okay. Here is the dramatic reenactment of what just happened."
+    );
+}
+
+
+/* ================= EXTRA ================= */
+
+function openExtra(){
+
+    showScreen("extra");
+
+    speak(
+        "Productivity has left the chat."
+    );
+}
+
+
+/* ================= RANDOM ================= */
+
+const randomMessages = [
+
+    "Scientists have confirmed: you are still doing nothing.",
+
+    "Achievement unlocked: absolutely no achievement.",
+
+    "Your chair is proud of you.",
+
+    "This was a very important waste of time.",
+
+    "Your future self has no comments.",
+
+    "Congratulations. You accomplished absolutely nothing.",
+
+    "Productivity has blocked your number.",
+
+    "Your brain is currently on airplane mode.",
+
+    "Nothing detected. Everything is working perfectly."
+
+];
+
+
+function randomMessage(){
+
+    const message =
+        randomMessages[
+            Math.floor(
+                Math.random()
+                * randomMessages.length
+            )
+        ];
+
+    document
+        .getElementById("randomText")
+        .textContent =
+        message;
+
+    speak(message);
+
+    createRandomPopup();
+}
+
+
+/* ================= RANDOM POPUP ================= */
+
+function createRandomPopup(){
+
+    const area =
+        document.getElementById("funArea");
+
+    const popup =
+        document.createElement("div");
+
+    popup.className = "popup";
+
+    popup.style.left =
+        (5 + Math.random()*65) + "%";
+
+    popup.style.top =
+        (8 + Math.random()*70) + "%";
+
+    popup.style.transform =
+        "rotate("
+        + (Math.random()*8-4)
+        + "deg)";
+
+    popup.innerHTML =
+        "<h3>🐈 Nothing detected.</h3>"
+        +
+        "<p>Still doing absolutely nothing.</p>";
+
+    area.appendChild(popup);
+
+    setTimeout(() => {
+        popup.remove();
+    },4500);
+}
+
+
+/* ================= SOUND ================= */
+
+function toggleSound(){
+
+    soundEnabled = !soundEnabled;
+
+    document
+        .getElementById("soundButton")
+        .textContent =
+        soundEnabled ? "🔊" : "🔇";
+
+    if(!soundEnabled){
+
+        if("speechSynthesis" in window){
+
+            window
+                .speechSynthesis
+                .cancel();
+        }
+
+    }else{
+
+        speak(
+            "Voice is back. Unfortunately."
+        );
+    }
+}
+
+
+/* ================= SPEECH ================= */
+
+function showSpeech(text){
+
+    const bubble =
+        document.getElementById(
+            "speechBubble"
+        );
+
+    bubble.textContent = text;
+
+    bubble.classList.add("show");
+
+    clearTimeout(showSpeech.timeout);
+
+    showSpeech.timeout =
+        setTimeout(() => {
+
+            bubble.classList.remove("show");
+
+        },5000);
+}
+
+
+function animateCatTalking(){
+
+    const cat =
+        document.getElementById(
+            "landingCat"
+        );
+
+    if(cat){
+
+        cat.classList.add("talking");
+
+        setTimeout(() => {
+
+            cat.classList.remove("talking");
+
+        },5000);
+    }
+}
+
+
+function speak(text){
+
+    showSpeech(text);
+
+    if(!soundEnabled) return;
+
+    if(!("speechSynthesis" in window)){
+        return;
+    }
+
+    window
+        .speechSynthesis
+        .cancel();
+
+    const voices =
+        window
+            .speechSynthesis
+            .getVoices();
+
+    let voice =
+        voices.find(v =>
+            /Samantha|Karen|Moira|Zira|Google US English|Google UK English/i
+            .test(v.name)
+        );
+
+    if(!voice){
+
+        voice =
+            voices.find(v =>
+                v.lang &&
+                v.lang
+                    .toLowerCase()
+                    .startsWith("en")
+            );
+    }
+
+    const utterance =
+        new SpeechSynthesisUtterance(text);
+
+    if(voice){
+
+        utterance.voice = voice;
+        utterance.lang = voice.lang;
+
+    }else{
+
+        utterance.lang = "en-US";
+    }
+
+    utterance.rate = 0.92;
+    utterance.pitch = 1.35;
+    utterance.volume = 1;
+
+    animateCatTalking();
+
+    utterance.onend = () => {
+
+        const cat =
+            document.getElementById(
+                "landingCat"
+            );
+
+        if(cat){
+            cat.classList.remove("talking");
+        }
+    };
+
+    utterance.onerror = () => {
+
+        const cat =
+            document.getElementById(
+                "landingCat"
+            );
+
+        if(cat){
+            cat.classList.remove("talking");
+        }
+    };
+
+    window
+        .speechSynthesis
+        .speak(utterance);
+}
+
+
+/* ================= LEAVE TIMER ================= */
+
+function leaveTimer(){
+
+    clearInterval(timerInterval);
+
+    showScreen("activity");
+
+    speak(
+        "Leaving already? Productivity is calling. Please ignore it."
+    );
+}
+
+
+/* ================= RESTART ================= */
+
+function restart(){
+
+    clearInterval(timerInterval);
+
+    selectedActivity = "";
+    selectedJoke = "";
+    seconds = 0;
+    isPaused = false;
+
+    document
+        .querySelectorAll(".activity-card")
+        .forEach(card =>
+            card.classList.remove("selected")
+        );
+
+    document
+        .getElementById("startTimerButton")
+        .disabled = true;
+
+    document
+        .getElementById("timerDisplay")
+        .textContent =
+        "00:00:00";
+
+    showScreen("landing");
+
+    speak(
+        "Back again? You really enjoy doing nothing."
+    );
+}
+
+
+/* ================= LOAD VOICES ================= */
+
+if("speechSynthesis" in window){
+
+    window
+        .speechSynthesis
+        .onvoiceschanged =
+        () => {
+
+            window
+                .speechSynthesis
+                .getVoices();
+        };
+}
+
+</script>
+
+</body>
+</html>
